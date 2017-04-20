@@ -1,3 +1,9 @@
+### 在faster-rcnn的基础上支持 Microsoft COCO 数据集。
+
+Microsoft COCO 数据集包含81个类别（80个类别，1个背景类）
+
+###提取出每个region proposal的FC7层
+
 ### Disclaimer
 
 The official Faster R-CNN code (written in MATLAB) is available [here](https://github.com/ShaoqingRen/faster_rcnn).
