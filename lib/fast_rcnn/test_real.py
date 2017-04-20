@@ -119,7 +119,7 @@ def im_detect(net, im, boxes=None):
         boxes (ndarray): R x (4*K) array of predicted bounding boxes
     """
     blobs, im_scales = _get_blobs(im, boxes)
-    allfc7 = net.blobs['fc7'].data
+
     # When mapping from image ROIs to feature map ROIs, there's some aliasing
     # (some distinct image ROIs get mapped to the same feature ROI).
     # Here, we identify duplicate feature ROIs, so we only compute features
@@ -167,11 +167,9 @@ def im_detect(net, im, boxes=None):
         # use softmax estimated probabilities
         scores = blobs_out['cls_prob']
         print(len(net.blobs['fc7'].data), len(net.blobs['fc7'].data[0]))
-        print("*********test*************")
-        #print(net.blobs['fc7'].data)
-        onefc7 = net.blobs['fc7'].data
-        allfc7 = np.vstack((allfc7, onefc7))
-        print(len(allfc7))
+        print("**********************")
+        print(net.blobs['fc7'].data)
+        np.savetxt("/root/py-faster-rcnn/tools/real_gan_fc7/real_fc7.txt", net.blobs['fc7'].data)
     if cfg.TEST.BBOX_REG:
         # Apply bounding-box regression deltas
         box_deltas = blobs_out['bbox_pred']
@@ -187,7 +185,7 @@ def im_detect(net, im, boxes=None):
         pred_boxes = pred_boxes[inv_index, :]
         print pred_boxes
 
-    return scores, pred_boxes, allfc7
+    return scores, pred_boxes
 
 def vis_detections(im, class_name, dets, thresh=0.3):
     """Visual debugging of detections."""
